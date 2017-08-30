@@ -8,6 +8,7 @@ const logger = require('utils/logger')()
 const router = require('router/routes')
 const path = require('path');
 const getPort = require('get-port');
+const config = require('config')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +41,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-getPort({ port: 3000 })
+getPort({ port: config.port})
   .then(port => app.listen(port, () => {
     logger.info(`Forecast App listening on port ${port}!`)
   }))
