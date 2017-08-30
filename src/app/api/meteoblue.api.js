@@ -34,9 +34,9 @@ const getAllDays = ({ lat, lon }) => {
         lat,
         lon,
         forecasts: _.reduce((res, item) => {
-          res[item.date] = item.forecasts
+          res.dates[item.date] = { times: item.forecasts }
           return res
-        }, {})
+        }, { dates: {} })
       }
     })
     .catch(err => {
@@ -155,11 +155,13 @@ const readWindspeeds = ($, context) => {
 }
 
 const readHumidities = ($, context) => {
+  debug('Parsing humidities')
   const result = []
   $('.humidities > td', context)
     .each((i, elem) => {
       result.push($('.cell', elem).text())
     })
+  debug(`humidities => ${result}`)
   return result
 }
 
