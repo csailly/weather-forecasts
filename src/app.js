@@ -9,6 +9,10 @@ const logger = require('utils/logger')()
 const routes = require('router/routes')
 const path = require('path');
 const getPort = require('get-port');
+const helmet = require('helmet');
+
+//Use Helmet to add some security
+app.use(helmet());
 
 // swagger setup
 require('utils/swagger').setup(app);
