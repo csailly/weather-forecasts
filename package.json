@@ -1,5 +1,5 @@
 {
-  "name": "xcweather",
+  "name": "weather-forecasts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -24,7 +24,9 @@
     "moment": "^2.18.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "rxjs": "^5.4.3"
+    "rxjs": "^5.4.3",
+    "swagger-jsdoc": "^1.9.7",
+    "swagger-ui-express": "^2.0.7"
   },
   "devDependencies": {
     "eslint": "^4.5.0",

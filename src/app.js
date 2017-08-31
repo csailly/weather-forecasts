@@ -10,6 +10,9 @@ const routes = require('router/routes')
 const path = require('path');
 const getPort = require('get-port');
 
+// swagger setup
+require('utils/swagger').setup(app);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -19,6 +22,7 @@ app.use((req, res, next) => {
   next()
 })
 
+//Api's routes
 app.use(config.api.root + '/', routes)
 
 // catch 404 and forward to error handler
@@ -40,7 +44,7 @@ app.use((err, req, res, next) => {
   res.render('error');
 });
 
-getPort({ port: config.port})
+getPort({ port: config.port })
   .then(port => app.listen(port, () => {
     logger.info(`Forecast App listening on port ${port}!`)
   }))
