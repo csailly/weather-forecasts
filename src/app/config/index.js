@@ -16,21 +16,34 @@ const path = require('path');
 
 const loadYamlFile = filename => {
   try {
-    return yaml.safeLoad(fs.readFileSync(path.join(__dirname, filename), 'utf8'))
+    return yaml.safeLoad(fs.readFileSync(path.join(__dirname, filename + '.yml'), 'utf8'))
   } catch (e) {
     return undefined
   }
 }
 
-const defaultFileConfig = loadYamlFile('config.yml') || require('./config')
+const loadJsonFile = filename => {
+  try {
+    return require('./' + filename + '.json')
+  } catch (e) {
+    return undefined
+  }
+}
+
+const loadConfigFile = filename => {
+  return loadYamlFile(filename) || loadJsonFile(filename) || {}
+}
+
+const defaultFileConfig = loadConfigFile('config')
+
 let environmentSpecificFileConfig = {}
 
 switch (process.env.NODE_ENV) {
   case 'production':
-    environmentSpecificFileConfig = loadYamlFile('config-prod.yml') || require('./config-prod')
+    environmentSpecificFileConfig = loadConfigFile('config-prod')
     break
   case 'development':
-    environmentSpecificFileConfig = loadYamlFile('config-dev.yml') || require('./config-dev')
+    environmentSpecificFileConfig = loadConfigFile('config-dev')
     break
 }
 

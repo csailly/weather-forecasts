@@ -10,7 +10,7 @@ const swaggerDefinition = {
     version: '1.0.0',
     description: 'Weather Forecast RESTfull API',
   },
-  basePath: config.api.root,
+  basePath: config.api.baseUrl,
 };
 
 // options for the swagger docs
@@ -25,11 +25,11 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 const setup = app => {
-  app.use(config.api.root + '/api-docs/swagger.json', (req, res) => {
+  app.use(config.api.baseUrl + '/api-docs/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
   })
-  app.use(config.api.root + '/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, true));
+  app.use(config.api.baseUrl + '/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, true));
 }
 
 module.exports = {

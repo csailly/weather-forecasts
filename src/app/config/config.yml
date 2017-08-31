@@ -1,2 +1,3 @@
+port: 3000
 api:
-  root: '/v1/forecasts'
+  baseUrl: '/v1/forecasts'
