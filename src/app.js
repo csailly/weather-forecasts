@@ -2,13 +2,13 @@
 //                 beginning of your main script! 
 require('app-module-path').addPath(__dirname + '/app')
 
+const config = require('config')
 const express = require('express')
 const app = express()
 const logger = require('utils/logger')()
 const router = require('router/routes')
 const path = require('path');
 const getPort = require('get-port');
-const config = require('config')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
