@@ -1,0 +1,2 @@
+api:
+  root: '/v1/forecasts'

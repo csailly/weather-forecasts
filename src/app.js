@@ -6,7 +6,7 @@ const config = require('config')
 const express = require('express')
 const app = express()
 const logger = require('utils/logger')()
-const router = require('router/routes')
+const routes = require('router/routes')
 const path = require('path');
 const getPort = require('get-port');
 
@@ -19,8 +19,7 @@ app.use((req, res, next) => {
   next()
 })
 
-const API_ROOT = '/v1/forecasts'
-app.use(API_ROOT + '/', router)
+app.use(config.api.root + '/', routes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

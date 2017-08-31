@@ -40,6 +40,6 @@ if (process.env.PORT) {
   finalConfig.port = process.env.PORT
 }
 
-logger.info(finalConfig)
+logger.info(`Application config ${JSON.stringify(finalConfig)}`)
 
 module.exports = finalConfig
