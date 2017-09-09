@@ -9,7 +9,7 @@ const meteoblueParser = require('api/meteoblue.api')
  * @swagger
  * /xcweather/lat/{lat}/lon/{lon}:
  *   get:
- *     description: Retrieve weather forecasts from xcweather for a specific location 
+ *     description: Retrieve weather forecasts from xcweather for a specific location
  *     produces:
  *       - application/json
  *     parameters:
@@ -43,7 +43,7 @@ router.get('/xcweather/lat/:lat/lon/:lon', (req, res, next) => {
  * @swagger
  * /metoffice/lat/{lat}/lon/{lon}:
  *   get:
- *     description: Retrieve weather forecasts from metoffice for a specific location 
+ *     description: Retrieve weather forecasts from metoffice for a specific location
  *     produces:
  *       - application/json
  *     parameters:
@@ -77,7 +77,7 @@ router.get('/metoffice/lat/:lat/lon/:lon', (req, res, next) => {
  * @swagger
  * /meteoblue/lat/{lat}/lon/{lon}:
  *   get:
- *     description: Retrieve weather forecasts from Meteoblue for a specific location 
+ *     description: Retrieve weather forecasts from Meteoblue for a specific location
  *     produces:
  *       - application/json
  *     parameters:

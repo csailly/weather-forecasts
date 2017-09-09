@@ -4,7 +4,7 @@
  * 1. OS environment variable (PORT only)
  * 2. Profile specific config file based on NODE_ENV OS environment variable
  * 3. Default config file
- * 
+ *
  * Config files can be in json or yaml (.yml) formats. Yaml formatted files will be prior to json formatted file
  * Each file will suceesively override properties from previous file
  */

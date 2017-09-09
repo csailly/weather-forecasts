@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   next()
 })
 
-//Api's routes
+// Api's routes
 app.use(config.api.baseUrl + '/', routes)
 
 // catch 404 and forward to error handler

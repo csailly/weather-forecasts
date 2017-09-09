@@ -74,7 +74,7 @@ const parseBody = $ => {
   let windchills = readWindchills($, context)
   let winddirs = readWinddirs($, context)
   let windspeeds = readWindspeeds($, context)
-  let humidities = readHumidities($, context)
+  /* let humidities = */readHumidities($, context)
   let precips = readPrecips($, context)
   let precipsProbs = readPrecipsProbs($, context)
 

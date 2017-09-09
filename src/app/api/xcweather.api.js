@@ -96,13 +96,13 @@ const getForecast = ({ lat, lon }) => {
 }
 
 const process = datas => {
-  var fcastRun,
-    fcastRunSuffix,
-    fcastStart,
-    fcastCount,
-    fcastInterval,
-    fcast,
-    tzdata
+  // var fcastRun
+  // var fcastRunSuffix
+  var fcastStart
+  var fcastCount
+  var fcastInterval
+  var fcast
+  var tzdata
   const fcastKey = 'XXXX'
 
   // eslint-disable-next-line no-eval
