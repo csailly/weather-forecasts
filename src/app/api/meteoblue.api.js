@@ -33,14 +33,17 @@ const getAllDays = ({ lat, lon }) => {
       return {
         lat,
         lon,
-        forecasts: _.reduce((res, item) => {
-          res.dates[item.date] = { times: item.forecasts }
-          return res
-        }, { dates: {} })
+        forecasts: _.reduce(
+          (res, item) => {
+            res.dates[item.date] = { times: item.forecasts }
+            return res
+          },
+          { dates: {} }
+        )
       }
     })
     .catch(err => {
-      throw (err)
+      throw err
     })
 }
 
@@ -50,20 +53,19 @@ const getOneDay = ({ lat, lon, day }) => {
 
   const options = {
     uri,
-    transform: (body) => cheerio.load(body)
+    transform: body => cheerio.load(body)
   }
 
   return rp(options)
     .then($ => parseBody($))
     .catch(err => {
-      throw (err)
+      throw err
     })
 }
 
-const parseBody = ($) => {
+const parseBody = $ => {
   debug('Parsing body')
-  let context = $('.tab_detail')
-    .filter((i, elem) => $(elem).hasClass('active'))
+  let context = $('.tab_detail').filter((i, elem) => $(elem).hasClass('active'))
 
   let date = readDate($, context)
   let times = readTimes($, context)
@@ -96,71 +98,73 @@ const parseBody = ($) => {
   return { date, forecasts }
 }
 
-const readDate = ($, context) => $('.times > th', context)
-  .find($('time'))
-  .attr('datetime')
+const readDate = ($, context) =>
+  $('.times > th', context)
+    .find($('time'))
+    .attr('datetime')
 
 const readTimes = ($, context) => {
   const result = []
-  $('.times > td', context)
-    .each((i, elem) => {
-      result.push($('time', elem).attr('datetime'))
-    })
+  $('.times > td', context).each((i, elem) => {
+    result.push($('time', elem).attr('datetime'))
+  })
   return result
 }
 
 const readWeatherDescriptions = ($, context) => {
   const result = []
-  $('.icons > td', context)
-    .each((i, elem) => {
-      result.push($('.picon', elem).attr('title'))
-    })
+  $('.icons > td', context).each((i, elem) => {
+    result.push($('.picon', elem).attr('title'))
+  })
   return result
 }
 
 const readTemps = ($, context) => {
   const result = []
-  $('.temperatures > td', context)
-    .each((i, elem) => {
-      result.push($('.cell', elem).text().replace('°', ''))
-    })
+  $('.temperatures > td', context).each((i, elem) => {
+    result.push(
+      $('.cell', elem)
+        .text()
+        .replace('°', '')
+    )
+  })
   return result
 }
 
 const readWindchills = ($, context) => {
   const result = []
-  $('.windchills > td', context)
-    .each((i, elem) => {
-      result.push($('.cell', elem).text().replace('°', ''))
-    })
+  $('.windchills > td', context).each((i, elem) => {
+    result.push(
+      $('.cell', elem)
+        .text()
+        .replace('°', '')
+    )
+  })
   return result
 }
 
 const readWinddirs = ($, context) => {
   const result = []
-  $('.winddirs > td', context)
-    .each((i, elem) => {
-      result.push($('.winddir', elem).text())
-    })
+  $('.winddirs > td', context).each((i, elem) => {
+    result.push($('.winddir', elem).text())
+  })
   return result
 }
 
 const readWindspeeds = ($, context) => {
   const result = []
-  $('.windspeeds > td', context)
-    .each((i, elem) => {
-      result.push($('.cell', elem).text())
-    })
+  $('.windspeeds > td', context).each((i, elem) => {
+    result.push($('.cell', elem).text())
+  })
   return result
 }
 
 const readHumidities = ($, context) => {
   debug('Parsing humidities')
   const result = []
-  $('.humidities > td', context)
-    .each((i, elem) => {
-      result.push($('.cell', elem).text())
-    })
+  $('.humidities > td', context).each((i, elem) => {
+    result.push($('.cell', elem).text())
+  })
   debug(`humidities => ${result}`)
   return result
 }
@@ -178,10 +182,9 @@ const readPrecips = ($, context) => {
 
 const readPrecipsProbs = ($, context) => {
   const result = []
-  $('.precipprobs > td', context)
-    .each((i, elem) => {
-      result.push($('.cell', elem).text())
-    })
+  $('.precipprobs > td', context).each((i, elem) => {
+    result.push($('.cell', elem).text())
+  })
   return result
 }
 

@@ -4,7 +4,45 @@ const Rx = require('rxjs/Rx')
 const debug = require('debug')('weather:api:xcweather')
 const logger = require('utils/logger')('weather:api:xcweather')
 
-const compass = ['N', 'N', 'NNE', 'NNE', 'NE', 'NE', 'ENE', 'ENE', 'E', 'E', 'E', 'ESE', 'ESE', 'SE', 'SE', 'SSE', 'SSE', 'S', 'S', 'S', 'SSW', 'SSW', 'SW', 'SW', 'WSW', 'WSW', 'W', 'W', 'W', 'WNW', 'WNW', 'NW', 'NW', 'NNW', 'NNW', 'N', 'N']
+const compass = [
+  'N',
+  'N',
+  'NNE',
+  'NNE',
+  'NE',
+  'NE',
+  'ENE',
+  'ENE',
+  'E',
+  'E',
+  'E',
+  'ESE',
+  'ESE',
+  'SE',
+  'SE',
+  'SSE',
+  'SSE',
+  'S',
+  'S',
+  'S',
+  'SSW',
+  'SSW',
+  'SW',
+  'SW',
+  'WSW',
+  'WSW',
+  'W',
+  'W',
+  'W',
+  'WNW',
+  'WNW',
+  'NW',
+  'NW',
+  'NNW',
+  'NNW',
+  'N',
+  'N'
+]
 const symNames = []
 symNames.n = ''
 symNames['0'] = ''
@@ -30,12 +68,15 @@ symNames.T = 'Risk of Thunder Storms'
 const getForecast = ({ lat, lon }) => {
   return Rx.Observable.create(observer => {
     debug('Call url')
-    request.get(`http://www.xcweather.co.uk/cgi-bin/fcast/fcast.cgi?lat=${lat}&lon=${lon}&reg=eu`)
-      .on('response', (response) => {
+    request
+      .get(
+        `http://www.xcweather.co.uk/cgi-bin/fcast/fcast.cgi?lat=${lat}&lon=${lon}&reg=eu`
+      )
+      .on('response', response => {
         // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
         response.setEncoding('utf8')
         let result = ''
-        response.on('data', (d) => {
+        response.on('data', d => {
           result += d
         })
         response.on('end', () => {
@@ -46,7 +87,7 @@ const getForecast = ({ lat, lon }) => {
           observer.complete()
         })
       })
-      .on('error', (err) => {
+      .on('error', err => {
         // handle errors with the request itself
         logger.error('Error with the request:', err.message)
         observer.error(err.message)
@@ -54,8 +95,14 @@ const getForecast = ({ lat, lon }) => {
   })
 }
 
-const process = (datas) => {
-  var fcastRun, fcastRunSuffix, fcastStart, fcastCount, fcastInterval, fcast, tzdata
+const process = datas => {
+  var fcastRun,
+    fcastRunSuffix,
+    fcastStart,
+    fcastCount,
+    fcastInterval,
+    fcast,
+    tzdata
   const fcastKey = 'XXXX'
 
   // eslint-disable-next-line no-eval
@@ -73,7 +120,7 @@ const process = (datas) => {
   var [, encodedFcastValues] = fcast[fcastKey].split('|')
 
   for (let index = 0; index < fcastCount; index++) {
-    let timestamp = fcastStart + (index * fcastInterval)
+    let timestamp = fcastStart + index * fcastInterval
     foreDir[timestamp] = encodedFcastValues.substr(index * 27, 2)
     foreSpeed[timestamp] = encodedFcastValues.substr(index * 27 + 2, 3)
     foreSym[timestamp] = encodedFcastValues.substr(index * 27 + 5, 2)
@@ -90,15 +137,21 @@ const process = (datas) => {
   let tzoffsetmill = tzoffset * 3600000
   const precip2snow = 12
 
-  var forecasts = {dates: {}}
+  var forecasts = { dates: {} }
 
   for (let index = 0; index < fcastCount; index++) {
-    let timestamp = fcastStart + (index * fcastInterval)
-    let date = moment.unix((timestamp + tzoffsetmill) / 1000).utc().format('YYYY-MM-DD')
-    let time = moment.unix((timestamp + tzoffsetmill) / 1000).utc().format('HH:mm')
+    let timestamp = fcastStart + index * fcastInterval
+    let date = moment
+      .unix((timestamp + tzoffsetmill) / 1000)
+      .utc()
+      .format('YYYY-MM-DD')
+    let time = moment
+      .unix((timestamp + tzoffsetmill) / 1000)
+      .utc()
+      .format('HH:mm')
 
     if (!forecasts.dates[date]) {
-      forecasts.dates[date] = {times: {}}
+      forecasts.dates[date] = { times: {} }
     }
 
     let forecast = {}
@@ -131,12 +184,12 @@ const fcastReturn = () => {
   // Unused fonction. Needs by evaluation of XCWeather return
 }
 
-const sAlt = (a) => {
-  const base = ((a.charAt(0) !== 'n') ? 0 : 1)
+const sAlt = a => {
+  const base = a.charAt(0) !== 'n' ? 0 : 1
   return symNames[a.charAt(base)] + symNames[a.charAt(base + 1)]
 }
 
-const fixed = (b) => {
+const fixed = b => {
   var a
   if (b > 10) {
     a = Math.round(b)

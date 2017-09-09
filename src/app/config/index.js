@@ -8,15 +8,16 @@
  * Config files can be in json or yaml (.yml) formats. Yaml formatted files will be prior to json formatted file
  * Each file will suceesively override properties from previous file
  */
-const yaml = require('js-yaml');
-const fs = require('fs');
+const yaml = require('js-yaml')
+const fs = require('fs')
 const logger = require('utils/logger')('weather:config')
-const path = require('path');
-
+const path = require('path')
 
 const loadYamlFile = filename => {
   try {
-    return yaml.safeLoad(fs.readFileSync(path.join(__dirname, filename + '.yml'), 'utf8'))
+    return yaml.safeLoad(
+      fs.readFileSync(path.join(__dirname, filename + '.yml'), 'utf8')
+    )
   } catch (e) {
     return undefined
   }
@@ -47,7 +48,11 @@ switch (process.env.NODE_ENV) {
     break
 }
 
-const finalConfig = Object.assign({}, defaultFileConfig, environmentSpecificFileConfig)
+const finalConfig = Object.assign(
+  {},
+  defaultFileConfig,
+  environmentSpecificFileConfig
+)
 
 if (process.env.PORT) {
   finalConfig.port = process.env.PORT

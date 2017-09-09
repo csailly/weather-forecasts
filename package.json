@@ -2,13 +2,13 @@
   "name": "weather-forecasts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "npm run dev",
-    "dev": "NODE_ENV=development DEBUG=weather:* nodemon src/app.js --exec 'npm run lint && node --trace-sync-io' | ./node_modules/.bin/bunyan",
-    "dev:no-lint": "NODE_ENV=development DEBUG=weather:* nodemon src/app.js | ./node_modules/.bin/bunyan",
+    "start": "npm run dev:no-lint",
+    "dev": "NODE_ENV=development DEBUG=weather:* nodemon bin/www --exec 'npm run lint && node --trace-sync-io' | ./node_modules/.bin/bunyan",
+    "dev:no-lint": "NODE_ENV=development DEBUG=weather:* nodemon bin/www | ./node_modules/.bin/bunyan",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext js ."
+    "lint": "eslint ---ext js ."
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +35,8 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "prettier-eslint": "^8.0.0",
+    "standard": "^10.0.3"
   }
 }
