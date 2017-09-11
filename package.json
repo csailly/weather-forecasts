@@ -8,7 +8,7 @@
     "dev": "NODE_ENV=development DEBUG=weather:* nodemon bin/www --exec 'npm run lint && node --trace-sync-io' | ./node_modules/.bin/bunyan",
     "dev:no-lint": "NODE_ENV=development DEBUG=weather:* nodemon bin/www | ./node_modules/.bin/bunyan",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ---ext js ."
+    "lint": "standard"
   },
   "author": "",
   "license": "ISC",
