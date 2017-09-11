@@ -6,8 +6,8 @@
 ## Code Style
 This project use StandardJS as code style. A pre-commit hook check that all javascript files respect it.
 You have to install 'standard' as global dependency.
-```
-$npm install --global standard
+``` bash
+$ npm install standard --global
 ```
 
 ## Swagger
